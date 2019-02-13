@@ -1,23 +1,8 @@
 
 # Convert RedHat Server to CentOs server
 # Helps avoiding RHEL Licensing fees
-#Login to the server and become root
-#Clean up yum’s cache
-unamestr=`uname -m`
-
-neo_install(){
-cd neo/
-sudo make install
-cd ..
-neofetch
-}
-
-echo "Testing the Migration from Red Hat Enterprise Linux Server release 6.9 (Santiago)" && sleep 2
-echo "To CentOS LInux Server 6.9 (Santiago)" && sleep 2
-echo "Checking Current OS"
-neo_install
-echo "Current OS"
-neofetch | grep "OS"
+# author: Tedley Meralus
+# contact: @TechGameTeddy
 
 yum clean all  && sleep 1
 #Create a temporary working area

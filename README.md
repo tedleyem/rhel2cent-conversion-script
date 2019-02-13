@@ -1,95 +1,30 @@
-Login to the server and become root
-Clean up yum’s cache
+## CONVERSION THERAPY ##
 
-$yum clean all
-migra
-$yum clean all
-Create a temporary working area
+At my job there is a large set of critical Redhat Enterprise Linux (RHEL) 5 and 6 servers that need to be changed to CentOS servers to save on licensing costs.
 
-$mkdir -p /temp/centos
-$cd /temp/centos
+This application is used to help mitigate that conversion and check to clean all Red Hat brandings on system and add the respective CentOS and EPEL repos/packages.
 
-
-$mkdir -p /temp/centos
-$cd /temp/centos
-Determine your version of RHEL
-
-$cat /etc/redhat-release
-
-$cat /etc/redhat-release
-Determine your architecture (32-bit = i386, 64-bit = x86_64)
-
-$uname -i
-
-$uname -i
-Download the applicable files for your release and architecture. The version numbers on these packages could change. This document was written as of CentOS 5.10. To find the current versions of these files browse this FTP site: http://mirror.centos.org/centos/5/os/i386/CentOS/ (32-bit) and http://mirror.centos.org/centos/5/os/x86_64/CentOS/ (64-bit)
-CentOS 5.10 / 32-bit
-
-$wget http://mirror.centos.org/centos/5/os/i386/RPM-GPG-KEY-CentOS-5
-$wget http://mirror.centos.org/centos/5/os/i386/CentOS/centos-release-5-x.el5.centos.i386.rpm
-$wget http://mirror.centos.org/centos/5/os/i386/CentOS/centos-release-notes-x.x-x.i386.rpm
-$wget http://mirror.centos.org/centos/5/os/i386/CentOS/yum-x.x.xx-xx.el5.centos.noarch.rpm
-$wget http://mirror.centos.org/centos/5/os/i386/CentOS/yum-updatesd-x.x-x.el5.noarch.rpm
-$wget http://mirror.centos.org/centos/5/os/i386/CentOS/yum-fastestmirror-x.x.xx-xx.el5.centos.noarch.rpm
-
-
-$wget http://mirror.centos.org/centos/5/os/i386/RPM-GPG-KEY-CentOS-5
-$wget http://mirror.centos.org/centos/5/os/i386/CentOS/centos-release-5-x.el5.centos.i386.rpm
-$wget http://mirror.centos.org/centos/5/os/i386/CentOS/centos-release-notes-x.x-x.i386.rpm
-$wget http://mirror.centos.org/centos/5/os/i386/CentOS/yum-x.x.xx-xx.el5.centos.noarch.rpm
-$wget http://mirror.centos.org/centos/5/os/i386/CentOS/yum-updatesd-x.x-x.el5.noarch.rpm
-$wget http://mirror.centos.org/centos/5/os/i386/CentOS/yum-fastestmirror-x.x.xx-xx.el5.centos.noarch.rpm
-
-CentOS 5.10 / 64-bit
-
-$wget http://mirror.centos.org/centos/5/os/x86_64/RPM-GPG-KEY-CentOS-5
-$wget http://mirror.centos.org/centos/5/os/x86_64/CentOS/centos-release-5-xx.el5.centos.x86_64.rpm
-$wget http://mirror.centos.org/centos/5/os/x86_64/CentOS/centos-release-notes-x.xx-x.x86_64.rpm
-$wget http://mirror.centos.org/centos/5/os/x86_64/CentOS/yum-x.x.xx-xx.el5.centos.noarch.rpm
-$wget http://mirror.centos.org/centos/5/os/x86_64/CentOS/yum-updatesd-x.x-x.el5.noarch.rpm
-$wget http://mirror.centos.org/centos/5/os/x86_64/CentOS/yum-fastestmirror-x.x.xx-xx.el5.centos.noarch.rpm
+#inspired by [The Picky Sysadmin](https://www.pickysysadmin.ca/2014/04/27/how-to-convert-rhel-5-x-to-centos-5-x/)
 
 
 
-get http://mirror.centos.org/centos/5/os/x86_64/RPM-GPG-KEY-CentOS-5
-$wget http://mirror.centos.org/centos/5/os/x86_64/CentOS/centos-release-5-xx.el5.centos.x86_64.rpm
-$wget http://mirror.centos.org/centos/5/os/x86_64/CentOS/centos-release-notes-x.xx-x.x86_64.rpm
-$wget http://mirror.centos.org/centos/5/os/x86_64/CentOS/yum-x.x.xx-xx.el5.centos.noarch.rpm
-$wget http://mirror.centos.org/centos/5/os/x86_64/CentOS/yum-updatesd-x.x-x.el5.noarch.rpm
-$wget http://mirror.centos.org/centos/5/os/x86_64/CentOS/yum-fastestmirror-x.x.xx-xx.el5.centos.noarch.rpm
-Import the GPG key for the appropriate version of CentOS
+The CentOS Linux distribution is a stable, predictable, manageable and reproducible platform derived from the sources of Red Hat Enterprise Linux (RHEL). Since March 2004, CentOS Linux has been a community-supported distribution derived from sources freely provided to the public by Red Hat. As such, CentOS Linux aims to be functionally compatible with RHEL. We mainly change packages to remove upstream vendor branding and artwork.
 
-$rpm --import RPM-GPG-KEY-CentOS-5
 
-$rpm --import RPM-GPG-KEY-CentOS-5
-Remove the RHEL release files
+## Installation and Testing
 
-$rpm -e --nodeps redhat-release
+### Git
 
-$rpm -e --nodeps redhat-release
-Remove the Redhat Network plugin for yum
+1. Clone or download the project files (**no compilation nor installation** is required) ;
 
-$rpm –e --nodeps yum-rhn-plugin
+        git clone https://github.com/tmeralus/RHEL2CENT-stripper.git
 
-$rpm –e --nodeps yum-rhn-plugin
-Removing the remaining RHEL files that may be install on the system
+2. Testing System:
 
-$rpm –e --nodeps rhn-client-tools rhn-setup rhn-check rhn-virtualization-common rhnsd redhat-logos redhat-release-notes rhel-instnum
+        cd RHEL2CENT-stripper; ./striptease
 
-$rpm –e --nodeps rhn-client-tools rhn-setup rhn-check rhn-virtualization-common rhnsd redhat-logos redhat-release-notes rhel-instnum
+Running the striptease first will check the OS before running the full conversion and suggest changes to be made if needed.
 
-Note: If this command fails saying a package is not installed remove the package from the command and run it again.
-Install the CentOS RPMs we downloaded previously (make sure you are still in /temp/centos)
+2. Execute:
 
-$rpm -Uvh --force *.rpm
-
-$rpm -Uvh --force *.rpm
-Upgrade to CentOS from RHEL
-
-$yum upgrade
-
-$yum upgrade
-Reboot the server
-Verify functionality
-Delete the VM Snapshot if you took one as part of the backup.
-
+      cd RHEL2CENT-stripper; ./rhelstripper

@@ -1,0 +1,32 @@
+# StripTease Script
+# Used to check system OS
+# before removing Red Hat brandings
+
+# Function to install neofetch from folder
+neo_install(){
+cd neo/
+sudo make install
+echo 'NeoFetch Installed' && sleep 1
+}
+
+echo "Testing the Migration from Red Hat To CentOS Linux Server" && sleep 2
+echo "Installing Neofetch to check current OS" && sleep 2
+neo_install && sleep 2
+echo "Current OS listed as" && sleep 2
+neofetch | grep "OS"
+
+if [ ! neofetch | grep 'Red Hat' ]
+then
+  echo "RedHat System Found" && sleep 3
+  echo "Open The Pod Bay Doors!" && sleep 3
+elif if [ ! neofetch | grep 'CentOS' ]
+then
+  echo "Your already part of the Community" $$ sleep 3
+  break
+elif if [ ! neofetch | grep 'Ubuntu' ]
+then
+  echo "You must be confused" $$ sleep 3
+  break
+else
+  echo "OS system name not found"
+fi
