@@ -6,6 +6,8 @@ they should be removed in the packages task of this playbook.
 
 ## CONVERSION THERAPY ##
 
+[CentOS Official Migration GUide](https://wiki.centos.org/HowTos/MigrationGuide)
+
 At my job there is a large set of critical Redhat Enterprise Linux (RHEL) 5 and 6 servers that need to be changed to CentOS servers to save on licensing costs.
 
 This application is used to help mitigate that conversion and check to clean all Red Hat brandings on system and add the respective CentOS and EPEL repos/packages.
