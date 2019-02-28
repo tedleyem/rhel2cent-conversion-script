@@ -1,3 +1,9 @@
+Note: packages like DUO 2FA or Elasticsearch
+are specific to distribution it is using so
+they should be removed in the packages task of this playbook.
+
+
+
 ## CONVERSION THERAPY ##
 
 At my job there is a large set of critical Redhat Enterprise Linux (RHEL) 5 and 6 servers that need to be changed to CentOS servers to save on licensing costs.

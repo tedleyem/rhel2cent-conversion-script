@@ -1,0 +1,53 @@
+- name: Add EPEL repository
+  yum_repository:
+    name: epel
+    description: EPEL YUM repo
+    baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+    enabled: yes
+    gpgcheck: no
+
+- name:  Update cache (make cache fast?)
+  yum:
+    update_cache: yes
+
+- name: Install EPEL Release
+  yum:
+    name: epel-release
+    state: latest
+
+# Test installing packages
+- name:  Install standard packges
+  yum:
+    name: "{{ packages }}"
+    state: installed
+    update_cache: yes
+  vars:
+    packages:
+    - audit
+    - net-snmp
+    - net-snmp-utils
+    - git
+    - openssh
+    - cmake
+
+- name:  Update cache / yum makecache fast
+  yum:
+    update_cache: yes
+
+- name: Configure Duo Repo
+  copy:
+    src: "{{ playbook_dir }}/templates/duo/duo.repo"
+    dest: "/etc/yum.repos.d/duosecurity.repo"
+    remote_src: no
+
+# show current os and version
+- debug:
+    msg: "{{ hostvars[inventory_hostname].ansible_distribution, hostvars[inventory_hostname].ansible_distribution_version }}"
+
+#- name: Reboot Server
+#  shell: shutdown -r now
+#  async: 0
+#  poll: 0
+
+#- name: Wait for server to come back after reboot
+#  local_action: wait_for host={{ ansible_ssh_host }} state=started

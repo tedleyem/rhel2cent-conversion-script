@@ -1,0 +1,25 @@
+# yum update takes a while and may fail with ansible
+#
+- name: upgrade all packages
+  yum:
+    name: '*'
+    state: latest
+  async: 1000
+  poll: 3
+  register: yum_update
+
+- name: 'check on yum update'
+  debug: var=yum_update.stdout_lines
+
+- name: 'Async - check on yum update'
+  async_status:
+    jid: "{{ yum_update.ansible_job_id }}"
+  register: job
+  until: job.finished
+  retries: 500
+
+- name: Check packages that werent update
+  shell: rpm -qa --last
+  
+- debug:
+    msg: "{{ hostvars[inventory_hostname].ansible_distribution, hostvars[inventory_hostname].ansible_distribution_version }}"

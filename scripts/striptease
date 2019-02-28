@@ -4,7 +4,7 @@
 
 # Function to install neofetch from folder
 neo_install(){
-cd neo/
+cd neofetch-pkg
 sudo make install
 echo 'NeoFetch Installed' && sleep 1
 }

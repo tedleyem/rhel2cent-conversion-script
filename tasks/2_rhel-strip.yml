@@ -1,0 +1,48 @@
+#- name: Remove RHN packages
+#  yum:
+#    name: "{{ packages }}"
+#    state: absent
+#    exclude: openssh,openssh*,nfs-utils*
+#  vars:
+#    packages:
+#    - rhnlib
+#    - abrt-plugin-bugzilla
+#    - redhat-release-notes*
+#    - redhat-release-server-6Server
+#    - redhat-indexhtml
+
+- name: Remove RHN Packages
+  shell: yum remove -y rhnlib abrt-plugin-bugzilla redhat-release-notes*
+  args:
+    chdir: /temp/centos/
+  ignore_errors: True
+
+- name: Remove RHN Packages
+  shell: rpm -e --nodeps redhat-release-server-6Server redhat-indexhtml
+  args:
+    chdir: /temp/centos/
+  ignore_errors: True
+
+  register: rhel_strip
+- debug: var=rhel_strip.stdout_lines
+
+- name: Clean subscription-manager
+  shell: sudo subscription-manager clean
+  args:
+    chdir: /temp/centos/
+  ignore_errors: True
+
+- name: Remove any subscription-managers
+  shell: yum remove subscription-manager
+  args:
+    chdir: /temp/centos/
+  ignore_errors: True
+
+- name: Force install the CentOS RPMs we downloaded
+  shell: rpm -Uvh --force *.rpm
+  args:
+    chdir: /temp/centos/
+#  ignore_errors: True
+
+- name: Clean up yum one more time and then upgrade
+  shell: yum clean all

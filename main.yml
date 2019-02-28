@@ -1,0 +1,9 @@
+- hosts: all
+  become: yes
+  become_user: root
+  become_method: sudo
+  tasks:
+    - import_tasks: "{{ playbook_dir }}/tasks/1_prep.yml"
+    - import_tasks: "{{ playbook_dir }}/tasks/2_rhel-strip.yml"
+    - import_tasks: "{{ playbook_dir }}/tasks/3_packages.yml"
+  #  - import_tasks: "{{ playbook_dir }}/tasks/4_update.yml"
