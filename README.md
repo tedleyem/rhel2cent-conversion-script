@@ -29,10 +29,10 @@ The CentOS Linux distribution is a stable, predictable, manageable and reproduci
 
 2. Testing System:
 
-        cd RHEL2CENT-stripper; ./striptease
+        cd rhel2cent-conversion-script/scripts &&  ./striptease
 
 Running the striptease first will check the OS before running the full conversion and suggest changes to be made if needed.
 
 2. Execute:
 
-      cd RHEL2CENT-stripper; ./rhelstripper
+      cd rhel2cent-conversion-script/scripts && ./rhelstripper
